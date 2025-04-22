@@ -22,6 +22,14 @@ pipeline {
             }
         }
 
+        stage('Run Tests') {
+            steps {
+                echo '🧪 Running tests with pytest...'
+                bat "\"${PYTHON}\" -m pip install pytest" // Install pytest if not already in requirements.txt
+                bat "\"${PYTHON}\" -m pytest tests/ --maxfail=1 --disable-warnings -q"
+            }
+        }
+
         stage('Run Streamlit App') {
             steps {
                 echo '🚀 Running Streamlit app in background...'
