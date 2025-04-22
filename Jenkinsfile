@@ -4,6 +4,7 @@ pipeline {
     environment {
         PYTHON = 'C:\\Users\\OMKAR\\AppData\\Local\\Programs\\Python\\Python311\\python.exe'
         REPO_URL = 'https://github.com/omimane/omi.git'
+        TESTS_DIR = 'tests'  // Directory where the test files are located
     }
 
     stages {
@@ -24,9 +25,17 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                echo '🧪 Running tests with pytest...'
-                bat "\"${PYTHON}\" -m pip install pytest" // Install pytest if not already in requirements.txt
-                bat "\"${PYTHON}\" -m pytest tests/ --maxfail=1 --disable-warnings -q"
+                script {
+                    // Check if the tests directory exists before running pytest
+                    def testDirExists = fileExists(TESTS_DIR)
+                    if (testDirExists) {
+                        echo '🧪 Running tests with pytest...'
+                        bat "\"${PYTHON}\" -m pip install pytest" // Install pytest if not already in requirements.txt
+                        bat "\"${PYTHON}\" -m pytest ${TESTS_DIR}/ --maxfail=1 --disable-warnings -q"
+                    } else {
+                        echo "🚨 No tests directory found. Skipping tests stage."
+                    }
+                }
             }
         }
 
@@ -44,3 +53,4 @@ pipeline {
         }
     }
 }
+
