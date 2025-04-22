@@ -2,44 +2,39 @@ pipeline {
     agent any
 
     environment {
-        VENV_DIR = 'venv'
+        PYTHON_PATH = 'C:\\Users\\OMKAR\\AppData\\Local\\Programs\\Python\\Python311\\python.exe'
+        REPO_URL = 'https://github.com/omimane/omi.git'
     }
 
     stages {
-        stage('Clone Repo') {
+        stage('Clone Repository') {
             steps {
-                echo 'Cloning Repository...'
-                checkout scm
-            }
-        }
-
-        stage('Set up Python Environment') {
-            steps {
-                echo 'Setting up Python Virtual Environment...'
-                sh 'python -m venv $VENV_DIR'
-                sh '. $VENV_DIR/bin/activate && pip install --upgrade pip'
+                echo '📥 Cloning GitHub repository...'
+                git branch: 'main', url: "${REPO_URL}"
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                echo 'Installing dependencies...'
-                sh '. $VENV_DIR/bin/activate && pip install -r requirements.txt'
+                echo '📦 Installing dependencies...'
+                bat "${PYTHON_PATH} -m pip install --upgrade pip"
+                bat "${PYTHON_PATH} -m pip install -r requirements.txt"
             }
         }
 
         stage('Run Streamlit App') {
             steps {
-                echo 'Running Streamlit App...'
-                sh '. $VENV_DIR/bin/activate && streamlit run app.py'
+                echo '🚀 Running the Streamlit app...'
+                bat "streamlit run app.py"
             }
         }
+
+        // Optional test/deploy stages can go here
     }
 
     post {
         always {
-            echo 'Cleaning up...'
-            sh 'rm -rf $VENV_DIR'
+            echo '✅ Pipeline complete.'
         }
     }
 }
