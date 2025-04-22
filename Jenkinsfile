@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                echo '📥 Cloning repository...'
+                echo '📥 Cloning GitHub repository...'
                 git branch: 'main', url: "${REPO_URL}"
             }
         }
@@ -24,8 +24,8 @@ pipeline {
 
         stage('Run Streamlit App') {
             steps {
-                echo '🚀 Launching Streamlit app...'
-                bat "\"${PYTHON}\" -m streamlit run app.py"
+                echo '🚀 Running Streamlit app in headless mode...'
+                bat "set STREAMLIT_DISABLE_WELCOME_MESSAGE=true && \"${PYTHON}\" -m streamlit run app.py --server.headless true"
             }
         }
     }
@@ -36,3 +36,4 @@ pipeline {
         }
     }
 }
+
