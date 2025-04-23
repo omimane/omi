@@ -9,7 +9,7 @@ import base64
 # -----------------------------
 # 1. Page Config
 # -----------------------------
-st.set_page_config(page_title="🌾 Crop Recommendation", layout="centered")
+st.set_page_config(page_title="🌾 Crop Recommendation system", layout="centered")
 
 # -----------------------------
 # 2. Hero Background Section
