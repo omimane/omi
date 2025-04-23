@@ -9,7 +9,7 @@ import base64
 # -----------------------------
 # 1. Page Config
 # -----------------------------
-st.set_page_config(page_title="🌾 Crop Recommendation system", layout="centered")
+st.set_page_config(page_title="🌾 Crop Recommendation System", layout="centered")
 
 # -----------------------------
 # 2. Hero Background Section
@@ -45,7 +45,7 @@ def set_hero_background(image_path):
             padding-bottom: 10px;
         }}
         </style>
-        <div class='hero'>🌾 Crop Recommendation</div>
+        <div class='hero'>🌾 Crop Recommendation System</div>
     """, unsafe_allow_html=True)
 
 set_hero_background("background.jpg")  # Or background.png
